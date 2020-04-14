@@ -12,13 +12,30 @@ data "aws_iam_policy_document" "transfer_server_assume_role" {
 
 data "aws_iam_policy_document" "transfer_server_assume_policy" {
   statement {
+    sid    = "AllowListingOfSFTPFolder"
     effect = "Allow"
 
     actions = [
-      "s3:*",
+      "s3:ListBucket",
+      "s3:GetBucketLocation"
     ]
 
-    resources = ["*"]
+    resources = [var.bucket_arn]
+  }
+
+  statement {
+    sid    = "HomeDirObjectAccess"
+    effect = "Allow"
+
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject",
+      "s3:DeleteObjectVersion",
+      "s3:DeleteObject",
+      "s3:GetObjectVersion"
+    ]
+
+    resources = ["${var.bucket_arn}/*"]
   }
 }
 
