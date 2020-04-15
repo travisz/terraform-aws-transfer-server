@@ -20,7 +20,7 @@ resource "aws_s3_bucket_public_access_block" "bucket" {
 }
 
 module "sftp" {
-  source = "git::https://github.com:travisz/terraform-aws-transfer-server.git?ref=master"
+  source = "git::https://github.com/travisz/terraform-aws-transfer-server?ref=master"
 
   transfer_server_name      = "sftp-server-name"
   transfer_server_user_names = [
